@@ -1,0 +1,1290 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title></title>
+    
+    <!--JQM 1.0 version-->
+    <link rel="stylesheet" href="../../css/jquery-mobile-min.css"/>
+    
+    <!--JQuery 1.6.4 version-->    
+    <script type="text/javascript" src="../../js/jquery-min.js"></script>
+	<script type="text/javascript" src="../../js/jquery-mobile-min.js"></script>
+	
+	<script type="text/javascript" src="../../data/firefox36.js"></script>
+	<script type="text/javascript" src="../../data/firefox40.js"></script>
+	<script type="text/javascript" src="../../data/firefox8.js"></script>
+	<script type="text/javascript" src="../../data/firefox9.js"></script>
+	<script type="text/javascript" src="../../data/firefox10.js"></script>
+	<script type="text/javascript" src="../../data/firefox11.js"></script>
+	<script type="text/javascript" src="../../data/firefox12.js"></script>
+	<script type="text/javascript" src="../../data/firefox14.js"></script>
+	<script type="text/javascript" src="../../data/firefox15.js"></script>
+	<script type="text/javascript" src="../../data/firefox17.js"></script>
+	<script type="text/javascript" src="../../data/firefox18.js"></script>
+	<script type="text/javascript" src="../../data/firefox19.js"></script>
+	<script type="text/javascript" src="../../data/firefox20.js"></script>
+	<script type="text/javascript" src="../../data/firefox25.js"></script>
+	<script type="text/javascript" src="../../data/firefox_aurora.js"></script>
+	<script type="text/javascript" src="../../data/firefox_nightly.js"></script>
+	<script type="text/javascript" src="../../data/firefox_os.js"></script>
+	
+	<script type="text/javascript" src="../../js/SessionStorage.js"></script>
+	
+	<script>
+		
+	function showBrowserData(BrowserData){
+
+		var listview = document.getElementById('listview');
+		
+		for(i=0;i<BrowserData.length;i++)
+		{
+		  var li = document.createElement('li');
+		  
+		  prop_valArr = getFormattedData(BrowserData[i]);
+		  
+		  if(li.hasChildNodes())
+		    li.removeChild();
+		  
+		  li.appendChild(document.createTextNode(prop_valArr[0]));
+		  li.appendChild(document.createTextNode(" : "));
+		  li.appendChild(prop_valArr[1]);
+		  
+		  listview.appendChild(li);
+		}
+		
+	}
+	
+	function getFormattedData(data){
+	
+		var prop_val = data.split(":");
+		var property = prop_val[0];
+		var isSupported = new String(prop_val[1]);
+		
+		var font = document.createElement('font');
+		font.color= 'blue';
+		font.appendChild(document.createTextNode(isSupported));
+		
+/*		var notSupported = new String('NOT SUPPORTED');
+		if(isSupported == 'Not Supported')
+		{
+			font.color= 'red';
+			font.appendChild(document.createTextNode(isSupported));
+		}
+		else
+		{
+			font.color= 'green';
+			font.appendChild(document.createTextNode(isSupported));
+		}		
+		console.log("isSupported " + notSupported.toUpperCase());*/
+		
+		prop_val[0] = property;
+		prop_val[1] = font;		
+		
+		return prop_val;
+	}
+	
+	
+	function changeParameter(){
+		var selectedParamter = document.getElementById('selectParamter');
+		setValues(getBrowserName(),selectedParamter.value);
+				
+		for(i=0; i < selectedParamter.options.length; i++)
+		{
+			if(selectedParamter.options[i].value == getParameterName())
+				selectedParamter.options[i].selected = true;
+		}
+
+		window.location = window.location;
+	}
+		
+	function retrieveBrowserData(){
+		console.log('Browser: ' + getBrowserName());
+		console.log('Parameter: ' + getParameterName());		
+		var BrowserData;
+				
+		switch(getBrowserName()){
+		
+			//Android 2.1
+			case 'android21':
+				switch(getParameterName()){
+					//Object.css	
+					case 'css': 
+					      BrowserData = android21.css;
+					break;					
+					case 'html5':
+					      BrowserData = android21.html5;
+					break;
+					case 'input_attributes':
+					      BrowserData = android21.input_attributes;
+					break;
+					case 'input_types':
+					      BrowserData = android21.input_types;
+					break;
+					case 'miscell':
+					      BrowserData = android21.miscell;
+					break;
+			       }
+			  break;
+			  
+			//Android 2.2
+			case 'android22':
+				switch(getParameterName()){
+					//Object.css	
+					case 'css': 
+					      BrowserData = android22.css;
+					break;					
+					case 'html5':
+					      BrowserData = android22.html5;
+					break;
+					case 'input_attributes':
+					      BrowserData = android22.input_attributes;
+					break;
+					case 'input_types':
+					      BrowserData = android22.input_types;
+					break;
+					case 'miscell':
+					      BrowserData = android22.miscell;
+					break;
+			       }
+			  break;
+			  
+			//Android 2.3.1
+			case 'android231':
+				switch(getParameterName()){
+					//Object.css	
+					case 'css': 
+					      BrowserData = android231.css;
+					break;					
+					case 'html5':
+					      BrowserData = android231.html5;
+					break;
+					case 'input_attributes':
+					      BrowserData = android231.input_attributes;
+					break;
+					case 'input_types':
+					      BrowserData = android231.input_types;
+					break;
+					case 'miscell':
+					      BrowserData = android231.miscell;
+					break;
+			       }
+			  break;
+			  
+			//Android 2.3.3
+			case 'android233':
+				switch(getParameterName()){
+					//Object.css	
+					case 'css': 
+					      BrowserData = android233.css;
+					break;					
+					case 'html5':
+					      BrowserData = android233.html5;
+					break;
+					case 'input_attributes':
+					      BrowserData = android233.input_attributes;
+					break;
+					case 'input_types':
+					      BrowserData = android233.input_types;
+					break;
+					case 'miscell':
+					      BrowserData = android233.miscell;
+					break;
+			       }
+			  break;				  
+			  		
+			//Android 4.0
+			case 'android40':
+				switch(getParameterName()){
+					//Object.css	
+					case 'css': 
+					      BrowserData = android40.css;
+					break;					
+					case 'html5':
+					      BrowserData = android40.html5;
+					break;
+					case 'input_attributes':
+					      BrowserData = android40.input_attributes;
+					break;
+					case 'input_types':
+					      BrowserData = android40.input_types;
+					break;
+					case 'miscell':
+					      BrowserData = android40.miscell;
+					break;
+			       }
+			  break;
+
+			  //Android 4.1
+			  case 'android41':
+				switch(getParameterName()){
+					//Object.css	
+					case 'css': 
+					      BrowserData = android41.css;
+					break;					
+					case 'html5':
+					      BrowserData = android41.html5;
+					break;
+					case 'input_attributes':
+					      BrowserData = android41.input_attributes;
+					break;
+					case 'input_types':
+					      BrowserData = android41.input_types;
+					break;
+					case 'miscell':
+					      BrowserData = android41.miscell;
+					break;
+			       }
+			  break;
+			  
+			//iPhone
+			case 'iphone':
+				switch(getParameterName()){
+					//Object.css	
+					case 'css': 
+					      BrowserData = iphone.css;
+					break;					
+					case 'html5':
+					      BrowserData = iphone.html5;
+					break;
+					case 'input_attributes':
+					      BrowserData = iphone.input_attributes;
+					break;
+					case 'input_types':
+					      BrowserData = iphone.input_types;
+					break;
+					case 'miscell':
+					      BrowserData = iphone.miscell;
+					break;
+			       }
+			  break;
+			  
+			//iPad
+			case 'ipad':
+				  switch(getParameterName()){
+					  //Object.css	
+					  case 'css': 
+						BrowserData = ipad.css;
+					  break;					
+					  case 'html5':
+						BrowserData = ipad.html5;
+					  break;
+					  case 'input_attributes':
+						BrowserData = ipad.input_attributes;
+					  break;
+					  case 'input_types':
+						BrowserData = ipad.input_types;
+					  break;
+					  case 'miscell':
+						BrowserData = ipad.miscell;
+					  break;
+				  }
+			break;
+		
+			//Maxthon
+			case 'maxthon':
+				  switch(getParameterName()){
+					  //Object.css	
+					  case 'css': 
+						BrowserData = maxthon.css;
+					  break;					
+					  case 'html5':
+						BrowserData = maxthon.html5;
+					  break;
+					  case 'input_attributes':
+						BrowserData = maxthon.input_attributes;
+					  break;
+					  case 'input_types':
+						BrowserData = maxthon.input_types;
+					  break;
+					  case 'miscell':
+						BrowserData = maxthon.miscell;
+					  break;
+				  }
+			break;
+		
+			//Opera Mobile
+			case 'operamobile':
+				  switch(getParameterName()){
+					  //Object.css	
+					  case 'css': 
+						BrowserData = operamobile.css;
+					  break;					
+					  case 'html5':
+						BrowserData = operamobile.html5;
+					  break;
+					  case 'input_attributes':
+						BrowserData = operamobile.input_attributes;
+					  break;
+					  case 'input_types':
+						BrowserData = operamobile.input_types;
+					  break;
+					  case 'miscell':
+						BrowserData = operamobile.miscell;
+					  break;
+				  }
+			break;
+		
+			//Dolphin
+			case 'dolphin':
+				  switch(getParameterName()){
+					  //Object.css	
+					  case 'css': 
+						BrowserData = dolphin.css;
+					  break;					
+					  case 'html5':
+						BrowserData = dolphin.html5;
+					  break;
+					  case 'input_attributes':
+						BrowserData = dolphin.input_attributes;
+					  break;
+					  case 'input_types':
+						BrowserData = dolphin.input_types;
+					  break;
+					  case 'miscell':
+						BrowserData = dolphin.miscell;
+					  break;
+				  }
+			break;
+		
+			//UC Browser 8.2
+			case 'uc82':
+				  switch(getParameterName()){
+					//Object.css	
+					case 'css': 
+					      BrowserData = uc82.css;
+					break;					
+					case 'html5':
+					      BrowserData = uc82.html5;
+					break;
+					case 'input_attributes':
+					      BrowserData = uc82.input_attributes;
+					break;
+					case 'input_types':
+					      BrowserData = uc82.input_types;
+					break;
+					case 'miscell':
+					      BrowserData = uc82.miscell;
+					break;
+				 }
+			  break;
+
+			//UC Browser 8.2
+			case 'firefox_os':
+				  switch(getParameterName()){
+					//Object.css	
+					case 'css': 
+					      BrowserData = firefox_os.css;
+					break;					
+					case 'html5':
+					      BrowserData = firefox_os.html5;
+					break;
+					case 'input_attributes':
+					      BrowserData = firefox_os.input_attributes;
+					break;
+					case 'input_types':
+					      BrowserData = firefox_os.input_types;
+					break;
+					case 'miscell':
+					      BrowserData = firefox_os.miscell;
+					break;
+				 }
+			  break;
+			
+			//BlackBerry Playbook 2.0
+			case 'playbook20':
+				  switch(getParameterName()){
+					//Object.css	
+					case 'css': 
+					      BrowserData = playbook20.css;
+					break;					
+					case 'html5':
+					      BrowserData = playbook20.html5;
+					break;
+					case 'input_attributes':
+					      BrowserData = playbook20.input_attributes;
+					break;
+					case 'input_types':
+					      BrowserData = playbook20.input_types;
+					break;
+					case 'miscell':
+					      BrowserData = playbook20.miscell;
+					break;
+				 }
+			  break;
+
+			  
+			//Chrome stable
+			case 'chrome_stable':
+				  switch(getParameterName()){
+					  //Object.css	
+					  case 'css': 
+						BrowserData = chrome_stable.css;
+					  break;					
+					  case 'html5':
+						BrowserData = chrome_stable.html5;
+					  break;
+					  case 'input_attributes':
+						BrowserData = chrome_stable.input_attributes;
+					  break;
+					  case 'input_types':
+						BrowserData = chrome_stable.input_types;
+					  break;
+					  case 'miscell':
+						BrowserData = chrome_stable.miscell;
+					  break;
+				 }
+			  break;
+			
+			//Chrome stable
+			case 'chrome_beta':
+				  switch(getParameterName()){
+					  //Object.css	
+					  case 'css': 
+						BrowserData = chrome_beta.css;
+					  break;					
+					  case 'html5':
+						BrowserData = chrome_beta.html5;
+					  break;
+					  case 'input_attributes':
+						BrowserData = chrome_beta.input_attributes;
+					  break;
+					  case 'input_types':
+						BrowserData = chrome_beta.input_types;
+					  break;
+					  case 'miscell':
+						BrowserData = chrome_beta.miscell;
+					  break;
+				 }
+			  break;
+			
+			//Chrome developer
+			case 'chrome_developer':
+				  switch(getParameterName()){
+					  //Object.css	
+					  case 'css': 
+						BrowserData = chrome_developer.css;
+					  break;					
+					  case 'html5':
+						BrowserData = chrome_developer.html5;
+					  break;
+					  case 'input_attributes':
+						BrowserData = chrome_developer.input_attributes;
+					  break;
+					  case 'input_types':
+						BrowserData = chrome_developer.input_types;
+					  break;
+					  case 'miscell':
+						BrowserData = chrome_developer.miscell;
+					  break;
+				 }
+			  break;
+			  
+			//Chrome canary
+			case 'chrome_canary':
+				  switch(getParameterName()){
+					  //Object.css	
+					  case 'css': 
+						BrowserData = chrome_canary.css;
+					  break;					
+					  case 'html5':
+						BrowserData = chrome_canary.html5;
+					  break;
+					  case 'input_attributes':
+						BrowserData = chrome_canary.input_attributes;
+					  break;
+					  case 'input_types':
+						BrowserData = chrome_canary.input_types;
+					  break;
+					  case 'miscell':
+						BrowserData = chrome_canary.miscell;
+					  break;
+				 }
+			  break;
+			
+			//Chromium
+			case 'chromium':
+				  switch(getParameterName()){
+					  //Object.css	
+					  case 'css': 
+						BrowserData = chromium.css;
+					  break;					
+					  case 'html5':
+						BrowserData = chromium.html5;
+					  break;
+					  case 'input_attributes':
+						BrowserData = chromium.input_attributes;
+					  break;
+					  case 'input_types':
+						BrowserData = chromium.input_types;
+					  break;
+					  case 'miscell':
+						BrowserData = chromium.miscell;
+					  break;
+				 }
+			  break;
+
+			case 'firefox36':
+					switch(getParameterName()){
+					  //Object.css	
+					  case 'css': 
+						BrowserData = firefox36.css;
+					  break;					
+					  case 'html5':
+						BrowserData = firefox36.html5;
+					  break;
+					  case 'input_attributes':
+						BrowserData = firefox36.input_attributes;
+					  break;
+					  case 'input_types':
+						BrowserData = firefox36.input_types;
+					  break;
+					  case 'miscell':
+						BrowserData = firefox36.miscell;
+					  break;
+				   }
+				break;
+			
+			case 'firefox40':
+					switch(getParameterName()){
+					  //Object.css	
+					  case 'css': 
+						BrowserData = firefox40.css;
+					  break;					
+					  case 'html5':
+						BrowserData = firefox40.html5;
+					  break;
+					  case 'input_attributes':
+						BrowserData = firefox40.input_attributes;
+					  break;
+					  case 'input_types':
+						BrowserData = firefox40.input_types;
+					  break;
+					  case 'miscell':
+						BrowserData = firefox40.miscell;
+					  break;
+				   }
+				break;
+
+			case 'firefox7':
+					switch(getParameterName()){
+					  //Object.css	
+					  case 'css': 
+						BrowserData = firefox7.css;
+					  break;					
+					  case 'html5':
+						BrowserData = firefox7.html5;
+					  break;
+					  case 'input_attributes':
+						BrowserData = firefox7.input_attributes;
+					  break;
+					  case 'input_types':
+						BrowserData = firefox7.input_types;
+					  break;
+					  case 'miscell':
+						BrowserData = firefox7.miscell;
+					  break;
+				   }
+				break;
+				
+			case 'firefox8':
+					switch(getParameterName()){
+					  //Object.css	
+					  case 'css': 
+						BrowserData = firefox8.css;
+					  break;					
+					  case 'html5':
+						BrowserData = firefox8.html5;
+					  break;
+					  case 'input_attributes':
+						BrowserData = firefox8.input_attributes;
+					  break;
+					  case 'input_types':
+						BrowserData = firefox8.input_types;
+					  break;
+					  case 'miscell':
+						BrowserData = firefox8.miscell;
+					  break;
+				   }
+				break;				
+				
+			case 'firefox9': 
+					switch(getParameterName()){
+					  //Object.css	
+					  case 'css': 
+						BrowserData = firefox9.css;
+					  break;					
+					  case 'html5':
+						BrowserData = firefox9.html5;
+					  break;
+					  case 'input_attributes':
+						BrowserData = firefox9.input_attributes;
+					  break;
+					  case 'input_types':
+						BrowserData = firefox9.input_types;
+					  break;
+					  case 'miscell':
+						BrowserData = firefox9.miscell;
+					  break;
+				   }
+				break;
+			
+			case 'firefox10':
+					switch(getParameterName()){
+					  //Object.css	
+					  case 'css': 
+						BrowserData = firefox10.css;
+					  break;					
+					  case 'html5':
+						BrowserData = firefox10.html5;
+					  break;
+					  case 'input_attributes':
+						BrowserData = firefox10.input_attributes;
+					  break;
+					  case 'input_types':
+						BrowserData = firefox10.input_types;
+					  break;
+					  case 'miscell':
+						BrowserData = firefox10.miscell;
+					  break;
+				   }
+				break;
+			
+			case 'firefox11':
+					switch(getParameterName()){
+					  //Object.css	
+					  case 'css': 
+						BrowserData = firefox11.css;
+					  break;					
+					  case 'html5':
+						BrowserData = firefox11.html5;
+					  break;
+					  case 'input_attributes':
+						BrowserData = firefox11.input_attributes;
+					  break;
+					  case 'input_types':
+						BrowserData = firefox11.input_types;
+					  break;
+					  case 'miscell':
+						BrowserData = firefox11.miscell;
+					  break;
+				   }
+				break;
+			
+			case 'firefox12':
+					switch(getParameterName()){
+					  //Object.css	
+					  case 'css': 
+						BrowserData = firefox12.css;
+					  break;					
+					  case 'html5':
+						BrowserData = firefox12.html5;
+					  break;
+					  case 'input_attributes':
+						BrowserData = firefox12.input_attributes;
+					  break;
+					  case 'input_types':
+						BrowserData = firefox12.input_types;
+					  break;
+					  case 'miscell':
+						BrowserData = firefox12.miscell;
+					  break;
+				   }
+				break;
+
+			case 'firefox14':
+					switch(getParameterName()){
+					  //Object.css	
+					  case 'css': 
+						BrowserData = firefox14.css;
+					  break;					
+					  case 'html5':
+						BrowserData = firefox14.html5;
+					  break;
+					  case 'input_attributes':
+						BrowserData = firefox14.input_attributes;
+					  break;
+					  case 'input_types':
+						BrowserData = firefox14.input_types;
+					  break;
+					  case 'miscell':
+						BrowserData = firefox14.miscell;
+					  break;
+				   }
+				break;
+
+			case 'firefox15':
+					switch(getParameterName()){
+					  //Object.css	
+					  case 'css': 
+						BrowserData = firefox15.css;
+					  break;					
+					  case 'html5':
+						BrowserData = firefox15.html5;
+					  break;
+					  case 'input_attributes':
+						BrowserData = firefox15.input_attributes;
+					  break;
+					  case 'input_types':
+						BrowserData = firefox15.input_types;
+					  break;
+					  case 'miscell':
+						BrowserData = firefox15.miscell;
+					  break;
+				   }
+				break;
+
+			case 'firefox17':
+					switch(getParameterName()){
+					  //Object.css	
+					  case 'css': 
+						BrowserData = firefox17.css;
+					  break;					
+					  case 'html5':
+						BrowserData = firefox17.html5;
+					  break;
+					  case 'input_attributes':
+						BrowserData = firefox17.input_attributes;
+					  break;
+					  case 'input_types':
+						BrowserData = firefox17.input_types;
+					  break;
+					  case 'miscell':
+						BrowserData = firefox17.miscell;
+					  break;
+				   }
+				break;
+
+
+			case 'firefox18':
+					switch( getParameterName() ) {
+					  //Object.css	
+					  case 'css': 
+						BrowserData = firefox18.css;
+					  break;					
+					  case 'html5':
+						BrowserData = firefox18.html5;
+					  break;
+					  case 'input_attributes':
+						BrowserData = firefox18.input_attributes;
+					  break;
+					  case 'input_types':
+						BrowserData = firefox18.input_types;
+					  break;
+					  case 'miscell':
+						BrowserData = firefox18.miscell;
+					  break;
+				   }
+				break;
+
+			case 'firefox19':
+					switch( getParameterName() ) {
+					  //Object.css	
+					  case 'css': 
+						BrowserData = firefox19.css;
+					  break;					
+					  case 'html5':
+						BrowserData = firefox19.html5;
+					  break;
+					  case 'input_attributes':
+						BrowserData = firefox19.input_attributes;
+					  break;
+					  case 'input_types':
+						BrowserData = firefox19.input_types;
+					  break;
+					  case 'miscell':
+						BrowserData = firefox19.miscell;
+					  break;
+				   }
+				break;
+
+			case 'firefox20':
+					switch( getParameterName() ) {
+					  //Object.css	
+					  case 'css': 
+						BrowserData = firefox20.css;
+					  break;					
+					  case 'html5':
+						BrowserData = firefox20.html5;
+					  break;
+					  case 'input_attributes':
+						BrowserData = firefox20.input_attributes;
+					  break;
+					  case 'input_types':
+						BrowserData = firefox20.input_types;
+					  break;
+					  case 'miscell':
+						BrowserData = firefox20.miscell;
+					  break;
+				   }
+				break;
+
+				case 'firefox25':
+					switch( getParameterName() ) {
+					  //Object.css	
+					  case 'css': 
+						BrowserData = firefox25.css;
+					  break;					
+					  case 'html5':
+						BrowserData = firefox25.html5;
+					  break;
+					  case 'input_attributes':
+						BrowserData = firefox25.input_attributes;
+					  break;
+					  case 'input_types':
+						BrowserData = firefox25.input_types;
+					  break;
+					  case 'miscell':
+						BrowserData = firefox25.miscell;
+					  break;
+				   }
+				break;
+				
+			case 'firefox_aurora':
+					switch(getParameterName()){
+					  //Object.css	
+					  case 'css': 
+						BrowserData = firefox_aurora.css;
+					  break;					
+					  case 'html5':
+						BrowserData = firefox_aurora.html5;
+					  break;
+					  case 'input_attributes':
+						BrowserData = firefox_aurora.input_attributes;
+					  break;
+					  case 'input_types':
+						BrowserData = firefox_aurora.input_types;
+					  break;
+					  case 'miscell':
+						BrowserData = firefox_aurora.miscell;
+					  break;
+				   }
+				break;
+			
+			case 'firefox_nightly':
+					switch(getParameterName()){
+					  //Object.css	
+					  case 'css': 
+						BrowserData = firefox_nightly.css;
+					  break;					
+					  case 'html5':
+						BrowserData = firefox_nightly.html5;
+					  break;
+					  case 'input_attributes':
+						BrowserData = firefox_nightly.input_attributes;
+					  break;
+					  case 'input_types':
+						BrowserData = firefox_nightly.input_types;
+					  break;
+					  case 'miscell':
+						BrowserData = firefox_nightly.miscell;
+					  break;
+				   }
+				break;
+				
+			case 'ie8':
+					switch(getParameterName()){
+					  //Object.css	
+					  case 'css': 
+						BrowserData = ie8.css;
+					  break;					
+					  case 'html5':
+						BrowserData = ie8.html5;
+					  break;
+					  case 'input_attributes':
+						BrowserData = ie8.input_attributes;
+					  break;
+					  case 'input_types':
+						BrowserData = ie8.input_types;
+					  break;
+					  case 'miscell':
+						BrowserData = ie8.miscell;
+					  break;
+				   }
+				break;
+				
+			case 'ie9':
+					switch(getParameterName()){
+					  //Object.css	
+					  case 'css': 
+						BrowserData = ie9.css;
+					  break;					
+					  case 'html5':
+						BrowserData = ie9.html5;
+					  break;
+					  case 'input_attributes':
+						BrowserData = ie9.input_attributes;
+					  break;
+					  case 'input_types':
+						BrowserData = ie9.input_types;
+					  break;
+					  case 'miscell':
+						BrowserData = ie9.miscell;
+					  break;
+				   }
+				break;
+				
+			case 'ie10':
+					switch(getParameterName()){
+					  //Object.css	
+					  case 'css': 
+						BrowserData = ie10.css;
+					  break;					
+					  case 'html5':
+						BrowserData = ie10.html5;
+					  break;
+					  case 'input_attributes':
+						BrowserData = ie10.input_attributes;
+					  break;
+					  case 'input_types':
+						BrowserData = ie10.input_types;
+					  break;
+					  case 'miscell':
+						BrowserData = ie10.miscell;
+					  break;
+				   }
+				break;				
+				
+			case 'opera116':
+					switch(getParameterName()){
+					  //Object.css	
+					  case 'css': 
+						BrowserData = opera116.css;
+					  break;					
+					  case 'html5':
+						BrowserData = opera116.html5;
+					  break;
+					  case 'input_attributes':
+						BrowserData = opera116.input_attributes;
+					  break;
+					  case 'input_types':
+						BrowserData = opera116.input_types;
+					  break;
+					  case 'miscell':
+						BrowserData = opera116.miscell;
+					  break;
+				   }
+				break;
+				
+			case 'opera1161':
+					switch(getParameterName()){
+					  //Object.css	
+					  case 'css': 
+						BrowserData = opera1161.css;
+					  break;					
+					  case 'html5':
+						BrowserData = opera1161.html5;
+					  break;
+					  case 'input_attributes':
+						BrowserData = opera1161.input_attributes;
+					  break;
+					  case 'input_types':
+						BrowserData = opera1161.input_types;
+					  break;
+					  case 'miscell':
+						BrowserData = opera1161.miscell;
+					  break;
+				   }
+				break;
+
+			case 'opera12':
+					switch(getParameterName()){
+					  //Object.css	
+					  case 'css': 
+						BrowserData = opera12.css;
+					  break;					
+					  case 'html5':
+						BrowserData = opera12.html5;
+					  break;
+					  case 'input_attributes':
+						BrowserData = opera12.input_attributes;
+					  break;
+					  case 'input_types':
+						BrowserData = opera12.input_types;
+					  break;
+					  case 'miscell':
+						BrowserData = opera12.miscell;
+					  break;
+				   }
+				break;	
+				
+			case 'safari512':
+					switch(getParameterName()){
+					  //Object.css	
+					  case 'css': 
+						BrowserData = safari512.css;
+					  break;					
+					  case 'html5':
+						BrowserData = safari512.html5;
+					  break;
+					  case 'input_attributes':
+						BrowserData = safari512.input_attributes;
+					  break;
+					  case 'input_types':
+						BrowserData = safari512.input_types;
+					  break;
+					  case 'miscell':
+						BrowserData = safari512.miscell;
+					  break;
+				   }
+				break;
+		}
+		//console.log('BrowserData ' + BrowserData);
+		return BrowserData;
+	}
+	
+	function updateTitle(){
+		var title = document.getElementById('title');
+		var BrowserName;
+		
+		switch(getBrowserName()){
+				case 'android21':
+							BrowserName = 'Android 2.1';
+							break;
+				case 'android22':
+							BrowserName = 'Android 2.2';
+							break;
+								
+				case 'android231':
+							BrowserName = 'Android 2.3.1';
+							break;
+								
+				case 'android233':
+							BrowserName = 'Android 2.3.3';
+							break;
+
+				case 'android40':
+							BrowserName = 'Android 4.0';
+							break;
+							
+				case 'android41':
+							BrowserName = 'Android 4.1';
+							break;
+							
+				case 'iphone':
+							BrowserName = 'iPhone';
+							break;
+							
+				case 'ipad':
+							BrowserName = 'iPad';
+							break;
+						
+				case 'maxthon':
+							BrowserName = 'Maxthon';
+							break;
+						
+				case 'operamobile':
+							BrowserName = 'Opera Mobile';
+							break;
+						
+				case 'dolphin':
+							BrowserName = 'Dolphin';
+							break;
+						
+				case 'uc82':
+							BrowserName = 'UC Browser 8.2';
+							break;
+
+				case 'firefox_os':
+							BrowserName = 'Firefox OS';
+							break;
+						
+				case 'playbook20':
+							BrowserName = 'Playbook 2.0';
+							break;
+							
+				case 'chrome_stable':
+							BrowserName = 'Chrome (stable)';
+							break;
+						
+				case 'chrome_beta':
+							BrowserName = 'Chrome (beta)';
+							break;
+						
+				case 'chrome_developer':
+							BrowserName = 'Chrome (developer)';
+							break;
+						
+				case 'chrome_canary':
+							BrowserName = 'Chrome (canary)';
+							break;
+				case 'chromium':
+							BrowserName = 'Chromium';
+							break;
+						
+				case 'firefox36':
+							BrowserName = 'Firefox 3.6';
+							break;
+				
+				case 'firefox40':
+							BrowserName = 'Firefox 4.0';
+							break;
+						
+				case 'firefox7':
+							BrowserName = 'Firefox 7';
+							break;
+				case 'firefox8':
+							BrowserName = 'Firefox 8';
+							break;								
+				case 'firefox9':
+							BrowserName = 'Firefox 9';
+							break;
+							
+				case 'firefox10':
+							BrowserName = 'Firefox 10';
+							break;
+				case 'firefox11':
+							BrowserName = 'Firefox 11';
+							break;
+						
+				case 'firefox12':
+							BrowserName = 'Firefox 12';
+							break;
+
+				case 'firefox14':
+							BrowserName = 'Firefox 14';
+							break;
+
+				case 'firefox15':
+							BrowserName = 'Firefox 15';
+							break;
+
+				case 'firefox17':
+							BrowserName = 'Firefox 17';
+							break;
+
+				case 'firefox18':
+							BrowserName = 'Firefox 18';
+							break;
+
+				case 'firefox19':
+							BrowserName = 'Firefox 19';
+							break;
+
+				case 'firefox20':
+							BrowserName = 'Firefox 20';
+							break;
+
+				case 'firefox25':
+							BrowserName = 'Firefox 25';
+							break;
+							
+				case 'firefox_aurora':
+							BrowserName = 'Firefox Aurora';
+							break;
+				case 'firefox_nightly':
+							BrowserName = 'Firefox Nightly';
+							break;
+				case 'ie8':
+							BrowserName = 'IE 8';
+							break;
+				case 'ie9':
+							BrowserName = 'IE 9';
+							break;
+								
+				case 'ie10':
+							BrowserName = 'IE 10';
+							break;
+																
+				case 'opera116':
+							BrowserName = 'Opera 11.6';
+							break;
+
+				case 'opera12':
+							BrowserName = 'Opera 12';
+							break;
+								
+				case 'opera1161':
+							BrowserName = 'Opera 11.61';
+							break;
+								
+				case 'safari512':
+							BrowserName = 'Safari 5.1.2';
+							break;								
+		}
+
+		title.appendChild(document.createTextNode(BrowserName));
+	}
+	
+	function updateHeading(){
+		var heading = document.getElementById('heading');
+		var ParameterName;
+		
+		switch(getParameterName()){
+				case 'css':
+				 				ParameterName = 'CSS3';
+								break;
+				case 'html5':
+				 				ParameterName = 'HTML5';
+								break;
+				case 'input_attributes':
+				 				ParameterName = 'Input Attributes';
+								break;
+				case 'input_types':
+				 				ParameterName = 'Input Types';
+								break;
+				case 'miscell':
+				 				ParameterName = 'Miscellaneous';
+								break;
+		}
+
+		heading.appendChild(document.createTextNode('Support for: ' + ParameterName));
+	}		
+	
+	</script>
+
+</head>
+<body>
+     <div data-role="page" id="home"> 
+	<div data-role="header">                            <!-- This div with data-role is the header, shown in the black -->
+   		   <h1 id="title"></h1>
+		   <a data-ajax="false" data-rel="back" data-icon="back">back</a>
+		   <a data-ajax="false" href="../../index.html" data-icon="home" data-iconpos="right">Home</a>
+        </div>
+         
+         <div data-role="content">                           <!-- This div is the body of the page -->
+
+		 		<div align="center">
+					<select onChange="changeParameter();" id="selectParamter">
+						<option value="css">CSS3</option>
+						<option value="html5">HTML5</option>
+						<option value="input_attributes">Input Attributes</option>
+						<option value="input_types">Input Types</option>
+						<option value="miscell">Miscellaneous</option>					
+					</select>
+				</div>
+				
+				<h3 id="heading" align="center"></h3>
+				<p>
+					<ul id="listview" data-role="listview" data-inset="true" data-theme="b" data-dividertheme="b">
+						<script>
+						
+							var selectedParamter = document.getElementById('selectParamter');
+							
+							setValues(getBrowserName(),getParameterName());
+							
+							for(i=0; i < selectedParamter.options.length; i++)
+							{
+								if(selectedParamter.options[i].value == getParameterName())
+								{
+									selectedParamter.options[i].selected = true;
+								}
+							}
+							
+							BrowserData = retrieveBrowserData();
+							showBrowserData(BrowserData);
+							
+							updateTitle();
+							updateHeading();
+						</script>
+					</ul>
+				</p>
+	                     
+          </div>  <!--content div-->
+
+        <!-- <div data-role="footer" data-position="fixed">
+            <h4>The4thDimension.net</h4> 
+        </div>           -->
+     </div> 
+ 
+</body>
+</html>

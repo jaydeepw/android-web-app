@@ -1,0 +1,157 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title></title>
+
+    <!--Old Code 1.0 alpha 1 version-->
+<!--	<link rel="stylesheet" href="css/jquery.mobile-1.0a4.1.min.css" />	
+	<script type="text/javascript" src="js/phonegap.js"></script>
+	<script type="text/javascript" src="js/jquery-1.5.1.min.js"></script>
+	<script type="text/javascript" src="js/jquery.mobile-1.0a4.1.min.js"></script>-->
+    
+    
+    <!--New Code 1.0 beta 1 version-->
+<!--	<link rel="stylesheet" href="css/jquery.mobile-1.0b1.min.css"/>
+	<script type="text/javascript" src="js/phonegap.js"></script>
+	<script type="text/javascript" src="js/jquery-1.6.1.min.js"></script>
+	<script type="text/javascript" src="js/jquery.mobile-1.0b2.min.js"></script>-->
+
+	<link rel="stylesheet" href="../css/code.css"/>    
+    
+    <!--New Code 1.0 beta 2 version-->    
+	<link rel="stylesheet" href="../css/jquery.mobile-1.0b2.min.css"/>
+	<script type="text/javascript" src="../js/jquery-1.6.2.min.js"></script>
+	<script type="text/javascript" src="../js/jquery.mobile-1.0b2.min.js"></script>
+
+
+</head>
+<body>
+     <div data-role="page" id="home"> 
+ 		 <div data-role="header">                            <!-- This div with data-role is the header, shown in the black -->
+   		   <h1>Security Best Practices</h1>
+           <a data-ajax="false" data-rel="back">back</a>
+		   <a data-ajax="false" href="../index.html" data-icon="home" data-iconpos="right">Home</a>
+ 		 </div> 
+         
+         <div data-role="content">                           <!-- This div is the body of the page -->
+         	<p>
+            
+            <h3>Security best practices in extensions</h3>
+This document is intended as a guide for developers to promote best practices in securing your extension. Your goal is to keep your users safe. Some items mentioned are strict guidelines, meaning that if you don't follow them then your add-on will not be approved on Mozilla add-ons. Other items are recommendations. The difference will be clearly flagged.<br/>This is written from the perspective of a Firefox extension, but most items apply to extensions for other Mozilla-based applications such as Thunderbird or SeaMonkey.<br/>If you have any further best practices, please contribute and add to this document.
+                 <div data-role="collapsible-set" data-theme="b">                                 
+                         <div data-role="collapsible" data-collapsed="true" data-theme="b">
+                           <h3>Code wrapping</h3>
+                              <p>
+                              <strong>Code wrapping</strong><br/>
+                                While not a direct threat to security, code that runs in the global namespace could still be unintentionally harmful by clashing with other extensions, or the Firefox code itself, and causing unpredictable behavior. So the first step every add-on author should do is wrap their code in their own unique namespace. There are a number of ways of doing this, as explained in this blog post. Note that code running in windows created by your add-on (not browser windows or standard dialogs), does not need to be namespaced. Similarly, code in XPCOM components does not need to be namespaced.
+                              </p>                  
+                         </div>
+                         <div data-role="collapsible" data-collapsed="true" data-theme="b">
+                           <h3>Web content handling</h3>
+                              <p>
+                              <strong>Web content handling</strong><br/>
+								As mentioned earlier when talking about content in sidebars, in general the best way to ensure that the browser is not compromised when you load content is to make sure it does not have those privileges. A more detailed explanation of this process is in Displaying web content in an extension without security issues.<br/>The privileges that a document gets also depend on where it comes from. For example, if you load a chrome URL, this means the content has been registered with Firefox and has full access. Content from a domain (such as http://www.example.com) can only access that same domain. Files loaded using the file protocol can access files on the user's disk and other local devices. There are ways to get around the content/chrome security barrier, if for example, you want a web page to send a notification to the add-on (or vice versa). One way to do this is to use custom DOM events; see Interaction between privileged and non-privileged pages.<br/>Regardless of where the document comes from, you can further restrict what it can do by applying properties to the document holder, known as the docshell.<br/>
+                                <ul>
+                                   <li>frame.docShell.allowImages = false;</li>
+                                   <li>frame.docShell.allowJavascript = false;</li>
+                                   <li>frame.docShell.allowPlugins = false;</li>
+                                </ul>
+                                There are more examples listed in the document listed above in this section. In certain circumstances you may want to run code in your extension, but you would like to give it restricted privileges. One of the best ways to do this is to use Components.utils.evalInSandbox(). Note that objects passed into the sandbox are restricted, but objects that come back out from it are not. Refer to the document to find out how to avoid such pitfalls. For more information, refer to the evalInSandbox section.
+                              </p>                  
+                         </div>       
+                         <div data-role="collapsible" data-collapsed="true" data-theme="b">
+                           <h3>The sidebar: a use case</h3>
+                              <p>
+                              <strong>The sidebar: a use case</strong><br/>
+                                The sidebar in Firefox is designed to hold both chrome (privileged) content and Web (nonprivileged) content, the latter being in the form of Web pages. These Web pages can come from a server, or come from local HTML files bundled with the extension. For pages coming from the server, you need to take steps to ensure that the content can not call back into the Web browser and run malicious code. The main way to do this is by creating an iframe or browser element in the sidebar, and loading your content there. Give the element a type="content" attribute, which essentially sandboxes the code there and blocks callback rights into chrome.</p>
+                         </div>
+                         <div data-role="collapsible" data-collapsed="true" data-theme="b">
+                           <h3>Using eval() in an extension</h3>
+                              <p>
+                              <strong>Using eval() in an extension</strong><br/>
+								Using the built-in JavaScript eval() function is frowned upon in the context of extensions. While there are some legitimate use-cases, most of the time there are safer alternatives. This blog post offers some excellent reasons not to use eval().
+                              </p>                  
+                         </div>
+                         <div data-role="collapsible" data-collapsed="true" data-theme="b">
+                           <h3>Sandboxed HTTP connections</h3>
+                              <p>
+                              <strong>Sandboxed HTTP connections</strong><br/>
+                                The main purpose of sandboxed HTTP connections is to interact with a web service, without interfering with the cookies set in the browser by that service/site. For example, if you are loading pictures or other data from a photo sharing site, you can sandbox your connections to that site so that the normal browsing of that site by the user in the main Firefox browser is not affected. For a real world use case, take a look at this blog post.
+                              </p>
+                         </div>
+                         <div data-role="collapsible" data-collapsed="true" data-theme="b">
+                           <h3>Handling of logins and passwords</h3>
+                              <p>
+                              <strong>Handling of logins and passwords</strong><br>
+								There are various ways of storing data in Firefox, but for user logins and passwords, you should use the Login Manager. This is the same store that holds the logins from web pages, and passwords can only be retrieved using a site/username pairing known to the author. The convention for extensions is to use a chrome url for the site identifier, to avoid clashes with logins for sites. It could be the case that your extension provides a different tool or tools for services on your site.<br/>This approach is preferable because it provides users with a familiar interface for interacting with logins, via the Firefox Password Manager. When users clear logins using the "Clear Recent History" option, it will include your extension's data.
+                              </p>                  
+                         </div>
+                         <div data-role="collapsible" data-collapsed="true" data-theme="b">
+                           <h3>APIs and other data handling</h3>
+                              <p>
+                              <strong>APIs and other data handling</strong><br>
+								Web content is more than just pages, and more and more add-ons are interacting with web services via an Application Programming Interface (API). Many of the items talked about so far in this document apply in this sphere, but here are some additional tips:
+								<ul>
+                                   <li>API providers should use the https protocol, which provides better protection for data passed over the network.</li>
+                                   <li>E4X is a good option for handling XML data returned by a web service, as it intrinsically solves some security problems when parsing.</li>
+                                   <li>JSON has become a popular data format for return formats for Web services. Be sure to read Using native JSON to find out the correct way to handle it.</li>
+                                   <li>APIs can't be used with self-signed certificates.</li>
+                                </ul>
+                              </p>                  
+                         </div>
+                         <div data-role="collapsible" data-collapsed="true" data-theme="b">
+                           <h3>Remote JavaScript and Content</h3>
+                              <p>
+                              <strong>Remote JavaScript and Content</strong><br>
+								There are a number of ways of remote scripts being used in extensions. They can be included in content, or downloaded at intervals.<br/> Non-chrome urls in chrome XUL or HTML such as the following example are not allowed:<br/>
+                                <div class="code">
+									&lt;script type="text/javascript" src="http://mysite.greatsite.com/js/wow-content.js" /&gt;
+								</div>
+								In general, scripts that are from remote sources that run in the chrome context are not acceptable, as many times the source of the script can never be 100% guaranteed, and they are vulnerable to man-in-the-middle attacks. The only legitimate environment for remote scripts is to run in a sandbox. For more information, refer to the evalInSandbox() section.
+                              </p>                  
+                         </div>     
+                         <div data-role="collapsible" data-collapsed="true" data-theme="b">
+                           <h3>evalInSandbox</h3>
+                              <p>
+                              <strong>evalInSandbox</strong><br>
+The evalInSandbox document explains very well how it works, so there will be no repetition here. The usefulness of it and power of how it works is best illustrated by the popular Greasemonkey extension, which works on the premise of scripts being downloaded and stored locally, to be injected into the web content context via the sandbox. Many extensions use the Greasemonkey compiler to bundle it in their extension for convenience. If you choose to do so, beware when making edits to the bundled files so as not to break the well thought out security architecture.<br/>One of the design goals of the Jetpack experiment is to sandbox scripts, and provide a better thought out security model of how the scripts interact with chrome.
+                              </p>                  
+                         </div>
+                         <div data-role="collapsible" data-collapsed="true" data-theme="b">
+                           <h3>Third-party JavaScript</h3>
+                              <p>
+                              <strong>Third-party JavaScript</strong><br>
+In the context of Web sites, using JavaScript written by others is very common. It is not unheard of in add-ons as well, and can provide a useful way to avoid code duplication and accelerate development. This article is about websites, but gives some insights into the general risks. When you do include other scripts, there are a number of things you can do to ensure their integrity and safety for users. The first is to always get it from a trusted source. Another thing you should do is namespace it just in case other add-ons include it. For example, if you're using jQuery, there's jQuery.noConflict().<br/> Note that for extensions in Firefox, there is a library built into the browser called FUEL that makes it easier to carry out common operations. Similar libraries exist for Thunderbird (STEEL) and SeaMonkey (SMILE), as well as a general purpose community library called jsLib.
+                              </p>                  
+                         </div>
+                         <div data-role="collapsible" data-collapsed="true" data-theme="b">
+                           <h3>No surprises</h3>
+                              <p>
+                              <strong>No surprises</strong><br>
+								While not directly security related to security, there are some things that an add-on author needs to take into consideration to provide a great user experience. For example, bombarding the user with configuration dialogs after installing is frowned upon; see this article for details. In general, try to integrate your add-on into the browsing experience as seamlessly as you can.<br/>If you collect data from users, be sure to disclose this fully in a publicly accessible privacy policy. Respect your users, respond to bug reports, and provide updates as needed. Users will grow to trust add-ons that are regularly maintained.
+                              </p>                  
+                         </div>
+                         <div data-role="collapsible" data-collapsed="true" data-theme="b">
+                           <h3>Open source vs. available source</h3>
+                              <p>
+                              <strong>Open source vs. available source</strong><br>
+								The JavaScript and other code you write for an add-on is not obfuscated, which means that anybody can study it and discover potential weaknesses. This means your code is open, but not in the sense of open source where the license for use is flexible. While an open license is not compulsory, it is very much encouraged because the Mozilla code itself is open source. There are ways to obfuscate your code, such as in binary XPCOM components or minified JavaScript, but this comes with trade-offs such as more difficult maintenance. And if you wish to deploy on the Mozilla Add-ons site, then you will need to submit the noncompiled source to reviewers for it not to be flagged as experimental.
+                              </p>                  
+                         </div>
+                 </div>                                      
+            </p>
+          </div>
+        <div data-role="footer" data-position="fixed">
+            <h4>The4thDimension.net</h4> 
+        </div>          
+     </div> 
+ 
+</body>
+</html>
+
+<!-- 
+
+Reference
+http://en.wikipedia.org/wiki/Mozilla_Firefox#Market_adoption
+
+ -->

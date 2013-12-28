@@ -1,0 +1,150 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title></title>
+	
+     <!--JQM 1.1.0 version-->
+    <link rel="stylesheet" href="../css/jquery-mobile-min.css"/>
+    
+    <!--JQuery 1.6.4 version-->    
+    <script type="text/javascript" src="../js/jquery-min.js"></script>    
+	<script type="text/javascript" src="../js/jquery-mobile-min.js"></script>
+	
+	<script type="text/javascript" src="../js/flotr2.min.js"></script>
+	
+	<script>
+
+	 </script>
+
+     <script type="text/javascript">
+    
+      var SERVER = 'http://myapis.nodester.com';
+	  //SERVER = 'http://127.0.0.1:16510';
+	
+	function getJSON(){
+	    $.mobile.showPageLoadingMsg();
+	 
+	    $.getJSON(SERVER + '/browser_data', function(data) {
+		
+		if(data != null && data !== 'undefined'){
+		 drawPieChart(document.getElementById('pie_chart'), JSON.parse(data));
+		 console.log( JSON.parse(data) );
+		}
+		else
+		  $('#pie_chart').append("Error in receiving data.");
+		
+		
+		$.mobile.hidePageLoadingMsg();
+	      });
+	}
+	
+	function showNoInternetAvailable(){
+	  //$('#pie_chart').append("Sorry, no internet connection available.");
+	  $('.no-internet').css('display', 'block');
+	}
+	
+		 
+	
+	    $( '#home' ).live( 'pageinit',function(event){
+		//event.preventDefault();
+		console.log("before");
+		
+		// this has been commented coz, navigator.onLine was not working on mobile devices.
+	//	if(navigator.onLine){
+	//	  getJSON();
+	//	  //setTimeout("getJSON()", 500);
+	//	} 
+	//        else
+	//	    $('#pie_chart').append("Sorry, no internet connection available.");
+	
+		 var img = new Image();
+		 img.onload = getJSON;
+		 img.onerror = showNoInternetAvailable;
+		 
+		 //img.src = 'http://www.theintouchid.com/static/images/chrome-logo-64x64.png';
+		img.src = 'https://dl.dropbox.com/u/16272703/internet-check.png';
+	       
+		console.log("after");
+	      });
+	    
+	     function drawPieChart(container, browserData) {
+		  
+		var graph,
+		    dataPointArray = new Array();
+
+			$.each(browserData.data, function(index, value) { 
+
+			  dataPoint = [[0, value.value]];
+			  dataPointArray[index] = { 
+			  							data: dataPoint,
+			  							label: value.label
+			  						  };
+			});
+		  
+		  graph = Flotr.draw(container, dataPointArray, {
+		    HtmlText : false,
+		    title: browserData.chart_title,
+		    grid : {
+		      verticalLines : false,
+		      horizontalLines : false
+		    },
+		    xaxis : { showLabels : false },
+		    yaxis : { showLabels : false },
+		    pie : {
+		      show : true
+		    },
+		    mouse : { track : true },
+		    legend : {
+		      //position : 'ws',
+		      backgroundColor : '#D2E8FF'
+		    }
+		  });
+		}
+	    
+    </script>
+    
+    <style>
+    #pie_chart {
+	width: 480px;
+	height: 320px;
+	margin: 20px auto 20px auto;
+    }
+    
+    .no-internet{
+     display: none;
+     margin: 10px auto;
+     width: 310px;
+     font-weight: bold;
+    }
+    </style>
+
+</head>
+<body>
+     <div data-role="page" id="home"> 
+ 		 <div data-role="header">                            <!-- This div with data-role is the header, shown in the black -->
+   		   <h1>Browser Stats</h1>
+           <a data-ajax="false" data-rel="back" data-icon="back" data-iconpos="left">back</a>
+		   <a data-ajax="false" href="../index.html" data-icon="home" data-iconpos="right">Home</a>
+ 		 </div> 
+         
+        <!-- <div data-role="content">                           
+	            <img src="../images/StatCounter-browser.png"></img>
+          </div>-->
+	  <div class="no-internet">
+	    Sorry, no internet connection available.
+          </div>
+	  
+         <div id="pie_chart">
+	  
+		</div>
+	
+		<div id="json"></div>
+
+
+        <!--<div data-role="footer" data-position="fixed">
+            <h4>The4thDimension.net</h4> 
+        </div>     -->     
+     </div> 
+ 
+</body>
+</html>
