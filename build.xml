@@ -89,15 +89,10 @@
     <!-- version-tag: 1 -->
     <import file="${sdk.dir}/tools/ant/build.xml" />
 
-
-	<target name="start">
-    		<antcall target="copyImages" />
-	</target>
-
-
 	<target name="copyImages">
-		<image srcdir="config/images/ic_launcher.png" destdir="res/" includes="ic_launcher.png">
-		</image>
+	  <exec executable="python">
+	    <arg value="scripts/resize_and_copy_images.py"/>
+	  </exec>
 	</target>
 
 </project>
